@@ -1,9 +1,10 @@
-package com.example.rabindracompose.domain.repository.home
+package com.example.rabindracompose.domain.repository
 
 import androidx.paging.PagingData
 import com.example.rabindracompose.domain.model.home.PhotosData
 import kotlinx.coroutines.flow.Flow
 
 interface PhotoRepository {
-    fun getPhotoData():Flow<PagingData<PhotosData>>
+    fun getPhoto():Flow<PagingData<PhotosData>>
 }
+
