@@ -9,5 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(private val photoUseCases: PhotoUseCases) : ViewModel() {
-val photoData = photoUseCases.getPhotos.invoke().cachedIn(viewModelScope)
+
+    val photoData = photoUseCases.getPhotos.invoke().cachedIn(viewModelScope)
 }
