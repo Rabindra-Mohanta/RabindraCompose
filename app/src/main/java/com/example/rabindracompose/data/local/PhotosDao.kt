@@ -16,5 +16,5 @@ interface PhotosDao {
     suspend fun deleteAllPhotoData()
 
     @Query("SELECT * FROM photosdata")
-    suspend fun getPhotoData(): PagingSource<Int, PhotosData>
+     fun getPhotoData(): PagingSource<Int, PhotosData>
 }

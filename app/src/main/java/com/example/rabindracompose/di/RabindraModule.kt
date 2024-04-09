@@ -1,12 +1,17 @@
 package com.example.rabindracompose.di
+import android.content.Context
+import androidx.room.Room
+import com.example.rabindracompose.data.local.RabindraDataBase
 import com.example.rabindracompose.data.remote.Api
 import com.example.rabindracompose.data.repository.PhotoRepositoryImpl
+import com.example.rabindracompose.data.utils.Constants.DB_NAME
 import com.example.rabindracompose.domain.repository.PhotoRepository
 import com.example.rabindracompose.domain.useCases.home.GetPhotos
 import com.example.rabindracompose.domain.useCases.home.PhotoUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,7 +28,13 @@ class RabindraModule {
 
     @Provides
     @Singleton
-    fun providePhotoRepository(api: Api):PhotoRepository = PhotoRepositoryImpl(api)
+    fun provideRoomDb(@ApplicationContext context: Context):RabindraDataBase
+    {
+        return Room.databaseBuilder(context,RabindraDataBase::class.java,DB_NAME).build()
+    }
+    @Provides
+    @Singleton
+    fun providePhotoRepository(api: Api,rabindraDataBase: RabindraDataBase):PhotoRepository = PhotoRepositoryImpl(api,rabindraDataBase)
 
     @Provides
     @Singleton
@@ -32,9 +43,4 @@ class RabindraModule {
         return PhotoUseCases(getPhotos = GetPhotos(photoRepository))
     }
 
-//    @Provides
-//    @Singleton
-//    fun providedNewsUseCases(newsRepository: NewsRepository,newsDao: NewsDao): NewsUseCases {
-//        return NewsUseCases(getNews = GetNews(newsRepository), searchNews = SearchNews(newsRepository), upsertArticle = UpsertArticle(newsDao), deleteArticle = DeleteArticle(newsDao), selectArticles = SelectArticles(newsDao))
-//    }
 }

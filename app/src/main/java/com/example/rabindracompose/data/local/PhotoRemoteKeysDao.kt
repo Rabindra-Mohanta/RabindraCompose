@@ -9,11 +9,11 @@ import com.example.rabindracompose.domain.model.home.PhotoRemoteKeys
 @Dao
 interface PhotoRemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertData(photoRemoteKeys: PhotoRemoteKeys)
+    suspend fun insertData(photoRemoteKeys: List<PhotoRemoteKeys>)
 
     @Query("SELECT * FROM PhotoRemoteKeys Where id=:id")
     suspend fun getRemoteKeys(id: Int?): PhotoRemoteKeys
 
-    @Query("SELECT * FROM PhotoRemoteKeys")
+    @Query("DELETE FROM PhotoRemoteKeys")
     suspend fun deleteAll()
 }
